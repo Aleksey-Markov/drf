@@ -1,0 +1,44 @@
+[
+  {
+    "model": "materials.course",
+    "pk": 17,
+    "fields": {
+      "title": "Python разработчик с нуля",
+      "description": "станьте разработчиком",
+      "preview": ""
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 1,
+    "fields": {
+      "title": "Введение",
+      "description": "Начало работы с пайтон",
+      "preview": "",
+      "link": "",
+      "course": null
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+      "title": "Введение",
+      "description": "Начало работы с пайтон",
+      "preview": "",
+      "link": "",
+      "course": null
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 3,
+    "fields": {
+      "title": "Введение",
+      "description": "азы",
+      "preview": "",
+      "link": null,
+      "course": 17
+    }
+  }
+]
