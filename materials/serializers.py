@@ -7,11 +7,10 @@ from materials.validators import LinkValidator
 
 
 class LessonSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Lesson
-        fields = ('title', 'description')
-        validators = [LinkValidator(field='link')]
+        fields = "__all__"
+        # validators = [LinkValidator(field='link')]
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
