@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from rest_framework.fields import SerializerMethodField
 
 from materials.models import Lesson, Course, Subscription
@@ -6,17 +6,21 @@ from materials.services import convert_currencies
 from materials.validators import LinkValidator
 
 
-class LessonSerializer(serializers.ModelSerializer):
+class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
-        # validators = [LinkValidator(field='link')]
+        validators = [LinkValidator(field='link')]
+
+    def create(self, validated_data):
+        lesson = Lesson.objects.create(**validated_data)
+        return lesson
 
 
-class CourseDetailSerializer(serializers.ModelSerializer):
-    lessons_count = serializers.SerializerMethodField()
+class CourseDetailSerializer(ModelSerializer):
+    lessons_count = SerializerMethodField()
     lessons_info = LessonSerializer(many=True, read_only=True)
-    usd_price = serializers.SerializerMethodField()
+    usd_price = SerializerMethodField()
 
     class Meta:
         model = Course
@@ -29,14 +33,14 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         return convert_currencies(obj.price)
 
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseSerializer(ModelSerializer):
 
     class Meta:
         model = Course
         fields = "__all__"
 
 
-class SubscriptionSerializer(serializers.ModelSerializer):
+class SubscriptionSerializer(ModelSerializer):
 
     class Meta:
         model = Subscription
