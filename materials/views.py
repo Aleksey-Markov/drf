@@ -3,6 +3,7 @@ from rest_framework import viewsets, generics
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from materials.models import Lesson, Course, Subscription
 from materials.paginators import MyPagination
@@ -52,7 +53,7 @@ class LessonUpdateAPIView(UpdateAPIView):
     queryset = Lesson.objects.all()
     permission_classes = [IsModer]
 
-    def sending(self):
+    def sss(self):
         if self.request.method == "PUT":
             sending.delay()
 

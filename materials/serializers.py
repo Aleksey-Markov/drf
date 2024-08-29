@@ -12,10 +12,6 @@ class LessonSerializer(ModelSerializer):
         fields = "__all__"
         validators = [LinkValidator(field='link')]
 
-    def create(self, validated_data):
-        lesson = Lesson.objects.create(**validated_data)
-        return lesson
-
 
 class CourseDetailSerializer(ModelSerializer):
     lessons_count = SerializerMethodField()
