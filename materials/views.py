@@ -9,7 +9,7 @@ from materials.models import Lesson, Course, Subscription
 from materials.paginators import MyPagination
 from materials.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer, CourseDetailSerializer
 from users.permissions import IsModer, IsOwner
-from materials.tasks import sending
+from materials.tasks import send_email
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -21,9 +21,10 @@ class CourseViewSet(viewsets.ModelViewSet):
             return CourseDetailSerializer
         return CourseSerializer
 
-    # def sending(self):
-    #     if self.request.method == "POST":
-    #         sending.delay()
+    def perform_update(self, serializer):
+        course = serializer.save()
+        send_email.delay(course)
+        course.save()
 
 
 class LessonCreateAPIView(CreateAPIView):
@@ -52,10 +53,6 @@ class LessonUpdateAPIView(UpdateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsModer]
-
-    def sss(self):
-        if self.request.method == "PUT":
-            sending.delay()
 
 
 class LessonDestroyAPIView(DestroyAPIView):
